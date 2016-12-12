@@ -3,6 +3,8 @@ import QtQuick 1.1
 Rectangle {
     id: eventListWin
 
+    signal goBack
+
     width: 320
     height: 240
     gradient: Gradient {
@@ -41,7 +43,7 @@ Rectangle {
 
         Text {
             id: btnSunday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("SU")
             anchors.left: parent.left
@@ -60,7 +62,7 @@ Rectangle {
 
         Text {
             id: btnMonday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("MO")
             anchors.left: btnSunday.right
@@ -78,11 +80,11 @@ Rectangle {
 
         Text {
             id: btnTuesday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("TU")
             anchors.left: btnMonday.right
-            anchors.leftMargin: 1
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
             MouseArea {
@@ -96,11 +98,11 @@ Rectangle {
 
         Text {
             id: btnWednesday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("WE")
             anchors.left: btnTuesday.right
-            anchors.leftMargin: 1
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
             MouseArea {
@@ -114,11 +116,11 @@ Rectangle {
 
         Text {
             id: btnThursday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("TH")
             anchors.left: btnWednesday.right
-            anchors.leftMargin: 1
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
             MouseArea {
@@ -132,11 +134,11 @@ Rectangle {
 
         Text {
             id: btnFriday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("FR")
             anchors.left: btnThursday.right
-            anchors.leftMargin: 1
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
             MouseArea {
@@ -150,7 +152,7 @@ Rectangle {
 
         Text {
             id: btnSaturday
-            width: 45
+            width: 40
             height: 50
             text: qsTr("SA")
             anchors.left: btnFriday.right
@@ -164,6 +166,22 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 12
+        }
+
+        Image {
+            id: backButton
+            width: 40
+            height: 50
+            source: "backArrow.png"
+            fillMode: Image.Stretch
+            anchors.left: btnSaturday.right
+            anchors.top: parent.top
+
+            MouseArea {
+                id: maBackButton
+                anchors.fill: parent
+                onClicked: eventListWin.goBack()
+            }
         }
     }
 

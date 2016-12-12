@@ -2,11 +2,11 @@
 QML_IMPORT_PATH =
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    qthermoappviewer.cpp \
+    qeventlistwindow.cpp
 
 RESOURCES += qml.qrc
-
-CONFIG += staticlib
 
 # Installation path
 # target.path =
@@ -19,4 +19,6 @@ include(deployment.pri)
 
 FORMS +=
 
-HEADERS +=
+HEADERS += \
+    qthermoappviewer.h \
+    qeventlistwindow.h

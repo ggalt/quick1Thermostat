@@ -24,6 +24,11 @@ Rectangle {
     property string curTime: ""
     property bool showColon: true
 
+    signal showEventWindow
+    signal showWeatherWindow
+
+
+
     Timer {
         id: textTimer
         interval: 500
@@ -71,6 +76,7 @@ Rectangle {
         MouseArea {
             id: maTargetTemp
             anchors.fill: parent
+            onClicked: mainRectangle.showEventWindow()
         }
     }
 
@@ -116,7 +122,7 @@ Rectangle {
     Text {
         id: txtDate
         y: 204
-        text: Qt.formatDate(new Date(),"MMM dd, yyyy")
+        text: mainRectangle.curDate
         anchors.left: parent.left
         anchors.leftMargin: 8
         anchors.bottom: parent.bottom
@@ -128,7 +134,7 @@ Rectangle {
         id: txtTime
         x: 286
         y: 218
-        text: Qt.formatTime(new Date(), "hh:mm AP")
+        text: mainRectangle.curTime
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 8
         anchors.right: parent.right

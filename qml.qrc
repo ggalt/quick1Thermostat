@@ -4,5 +4,6 @@
         <file>downarrow.png</file>
         <file>uparrow.png</file>
         <file>eventListWin.qml</file>
+        <file>backArrow.png</file>
     </qresource>
 </RCC>
