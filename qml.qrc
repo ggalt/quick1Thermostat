@@ -3,7 +3,8 @@
         <file>main.qml</file>
         <file>downarrow.png</file>
         <file>uparrow.png</file>
-        <file>eventListWin.qml</file>
+        <file>EventListWin.qml</file>
         <file>backArrow.png</file>
+        <file>MainWindow.qml</file>
     </qresource>
 </RCC>

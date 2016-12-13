@@ -10,9 +10,9 @@ int main(int argc, char *argv[])
     viewer.setOrientation(QtQuick1ApplicationViewer::ScreenOrientationAuto);
     viewer.setMainQmlFile(QLatin1String("qrc:/main.qml"));
 //    viewer.Init();
-    QObject *obj = (QObject*)viewer.rootObject();
+//    QObject *obj = (QObject*)viewer.rootObject();
 
-    QObject::connect(obj, SIGNAL(showEventWindow()), &viewer, SLOT(LaunchEventListWin()));
+//    QObject::connect(obj, SIGNAL(showEventWindow()), &viewer, SLOT(LaunchEventListWin()));
     viewer.showExpanded();
 
     return app.exec();

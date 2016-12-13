@@ -22,3 +22,5 @@ FORMS +=
 HEADERS += \
     qthermoappviewer.h \
     qeventlistwindow.h
+
+OTHER_FILES +=

@@ -180,7 +180,7 @@ Rectangle {
             MouseArea {
                 id: maBackButton
                 anchors.fill: parent
-                onClicked: eventListWin.goBack()
+                onClicked: mainRectangle.showMainWindow()
             }
         }
     }
