@@ -17,6 +17,7 @@ Rectangle {
     }
 
     signal loadWindow(string newWinName)
+    signal showEventWindow
 
     Text {
         id: txtCurrentTemp
@@ -46,8 +47,8 @@ Rectangle {
         MouseArea {
             id: maTargetTemp
             anchors.fill: parent
-            onClicked: loadWindow("EventListWin")
-//            onClicked: showEventWindow()
+//            onClicked: loadWindow("EventListWin")
+            onClicked: showEventWindow()
         }
     }
 
