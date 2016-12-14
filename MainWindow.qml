@@ -1,8 +1,11 @@
 import QtQuick 1.1
 
 Rectangle {
+    id: rectangle1
     width: 320
     height: 240
+
+    opacity: 0
 
     gradient: Gradient {
         GradientStop {
@@ -14,6 +17,17 @@ Rectangle {
             position: 1
             color: "#62c288"
         }
+    }
+
+    NumberAnimation on opacity {
+        id: fadeInAnimation
+        duration: 300
+        easing.type: Easing.InCubic
+        to: 1.0
+    }
+
+    function fadeIn() {
+        fadeInAnimation.start()
     }
 
     signal loadWindow(string newWinName)
@@ -29,26 +43,24 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 72
+        font.pixelSize: 90
     }
 
     Text {
         id: txtTargetTemp
         x: 294
         text: targetTemp.toString()
-        anchors.topMargin: 2
+        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignTop
         horizontalAlignment: Text.AlignRight
         anchors.right: parent.right
         anchors.rightMargin: 2
-        anchors.top: parent.top
         font.pixelSize: 40
 
         MouseArea {
             id: maTargetTemp
             anchors.fill: parent
-//            onClicked: loadWindow("EventListWin")
-            onClicked: showEventWindow()
+            onClicked: mainRectangle.showEventListWindow()
         }
     }
 
@@ -58,6 +70,9 @@ Rectangle {
         y: 32
         width: 40
         height: 40
+        anchors.bottomMargin: 5
+        anchors.bottom: txtTargetTemp.top
+        anchors.horizontalCenter: txtTargetTemp.horizontalCenter
         source: "uparrow.png"
 
         MouseArea {
@@ -69,9 +84,11 @@ Rectangle {
     Image {
         id: downButton
         x: 140
-        y: 168
         width: 40
         height: 40
+        anchors.top: txtTargetTemp.bottom
+        anchors.topMargin: 5
+        anchors.horizontalCenter: txtTargetTemp.horizontalCenter
         source: "downarrow.png"
 
         MouseArea {
@@ -85,6 +102,7 @@ Rectangle {
         x: 236
         y: 18
         text: qsTr("Target:")
+        anchors.verticalCenter: txtTargetTemp.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
         anchors.right: txtTargetTemp.left
@@ -115,18 +133,30 @@ Rectangle {
     }
 
     Image {
-        id: currentWeather
+        id: imgCurrentWeather
         width: 80
         height: 80
         anchors.left: parent.left
         anchors.leftMargin: 2
         anchors.top: parent.top
         anchors.topMargin: 2
-        source: "qrc:/qtquickplugin/images/template_image.png"
+        source: "Sun-80.png"
 
         MouseArea {
             id: maWeather
+            z: 1
             anchors.fill: parent
+            onClicked: mainRectangle.showWeatherWindow()
+        }
+
+        Text {
+            id: outsideTemp
+            x: 86
+            y: 26
+            text: qsTr("70")
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            font.pixelSize: 22
         }
     }
 
@@ -134,8 +164,8 @@ Rectangle {
         id: txtRelHum
         x: 292
         text: curHumidity+"%"
-        anchors.top: txtTargetTemp.bottom
-        anchors.topMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 2
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
@@ -143,26 +173,27 @@ Rectangle {
         font.pixelSize: 20
     }
 
-    Text {
-        id: outsideTemp
-        y: 35
-        text: qsTr("70")
-        anchors.left: currentWeather.right
-        anchors.leftMargin: 6
-        anchors.verticalCenter: currentWeather.verticalCenter
-        font.pixelSize: 22
-    }
-
     Image {
         id: imgCoolingState
-        x: 258
         y: 138
         width: 60
         height: 60
+        anchors.leftMargin: 2
+        anchors.left: parent.left
         anchors.bottom: txtTime.top
         anchors.bottomMargin: 6
-        anchors.right: parent.right
-        anchors.rightMargin: 2
         source: "qrc:/qtquickplugin/images/template_image.png"
+    }
+
+    Text {
+        id: lblRelHum
+        x: 105
+        y: 12
+        text: qsTr("Humidity:")
+        anchors.right: txtRelHum.left
+        anchors.verticalCenter: txtRelHum.verticalCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: 18
     }
 }

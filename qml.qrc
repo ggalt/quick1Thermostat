@@ -6,5 +6,8 @@
         <file>EventListWin.qml</file>
         <file>backArrow.png</file>
         <file>MainWindow.qml</file>
+        <file>Sun-80.png</file>
+        <file>WeatherWindow.qml</file>
+        <file>Sun-120.png</file>
     </qresource>
 </RCC>

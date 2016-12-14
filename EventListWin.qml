@@ -5,6 +5,19 @@ Rectangle {
 
     signal goBack
 
+    opacity: 0
+
+    NumberAnimation on opacity {
+        id: fadeInAnimation
+        duration: 300
+        easing.type: Easing.InCubic
+        to: 1.0
+    }
+
+    function fadeIn() {
+        fadeInAnimation.start()
+    }
+
     width: 320
     height: 240
     gradient: Gradient {
@@ -46,8 +59,7 @@ Rectangle {
             width: 40
             height: 50
             text: qsTr("SU")
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.left: backButton.right
             anchors.top: parent.top
             anchors.topMargin: 0
             verticalAlignment: Text.AlignVCenter
@@ -174,7 +186,7 @@ Rectangle {
             height: 50
             source: "backArrow.png"
             fillMode: Image.Stretch
-            anchors.left: btnSaturday.right
+            anchors.left: parent.left
             anchors.top: parent.top
 
             MouseArea {

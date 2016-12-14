@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Qt.labs.gestures 1.0
 
 Rectangle {
     id: mainRectangle
@@ -35,6 +36,10 @@ Rectangle {
         mainRectangle.state ="EventWindowState";
     }
 
+    function showWeatherWindow() {
+        mainRectangle.state = "WeatherWindowState"
+    }
+
     Timer {
         id: introTimer
         interval: 700
@@ -56,82 +61,30 @@ Rectangle {
 
     Loader {
         id: mainWindowLoader
-//        onSourceChanged: mainWinAnimation.running = true
-
-//        NumberAnimation {
-//            id: mainWinAnimation
-//            target: mainWindowLoader.item
-//            property: "opacity"
-//            from: 0
-//            to: 1
-//            duration: 300
-//            easing.type: Easing.InExpo
-//        }
+        onLoaded: item.fadeIn()
     }
-
-
 
     Loader {
         id: eventListWindowLoader
-//        onSourceChanged: eventWinAnimation.running = true
-
-//        NumberAnimation {
-//            id: eventWinAnimation
-//            target: eventListWindowLoader.item
-//            property: "opacity"
-//            from: 0
-//            to: 1
-//            duration: 300
-//            easing.type: Easing.InExpo
-//        }
+        onLoaded: item.fadeIn()
     }
 
-    Connections {
-        target: mainWindowLoader.item
-        onShowEventWindow: showEventListWindow()
+    Loader {
+        id: weatherWindowLoader
+        onLoaded: item.fadeIn()
     }
-
-//    property string sourceComponent
-
-//    function loadWindow(winName) {
-//        console.log(winName)
-//        if(winName === "MainWindow") {
-//            loadComponent("MainWindow.qml")
-////            mainRectangle.state = "MainWindowState"
-//        } else if(winName ==="EventListWin") {
-//            loadComponent("EventListWin.qml")
-//        }
-//    }
-
-//    function loadComponent(component){
-//        fadeIn.stop(); fadeOut.start();
-//        sourceComponent = component;
-//        fadeIn.start()
-//    }
-
-//    Loader {
-//        id: mainWindowLoader
-//        onLoaded: {fadeOut.complete(); fadeIn.start() }
-//    }
 
 //    Connections {
-//        target: mainWindowLoader
-//        onLoadWindow: loadWindow(newWinName)
+//        target: mainWindowLoader.item
+//        onShowEventWindow: showEventListWindow()
 //    }
 
-//    NumberAnimation on opacity {
-//        id: fadeOut
-//        duration: 300
-//        easing.type: Easing.OutCubic
-//        to: 0.0
-//        onCompleted: { mainWindowLoader.source = sourceComponent; }
-//    }
-//    NumberAnimation on opacity {
-//        id: fadeIn
-//        duration: 300
-//        easing.type: Easing.InCubic
-//        to: 1.0
-//    }
+    GestureArea {
+        anchors.fill: parent
+        onSwipe: console.log(Gesture.gestureType.toString(), Gesture.gestureType.valueOf())
+    }
+
+
 
 //    Text {
 //        id: titleText
@@ -149,27 +102,6 @@ Rectangle {
 //        font.pixelSize: 40
 //    }
 
-//    Rectangle {
-//        id: rectEventWin
-//        gradient: mainGradient
-//        anchors.fill: parent
-//    }
-
-//    Rectangle {
-//        id: rectMainWin
-//        gradient: mainGradient
-//        anchors.fill: parent
-//    }
-
-
-//    MainWindow {
-//        visible: true
-//    }
-
-//    EventListWin {
-//        visible: false
-//    }
-
     states: [
         State {
             name: "MainWindowState"
@@ -179,6 +111,10 @@ Rectangle {
             }
             PropertyChanges {
                 target: eventListWindowLoader
+                source: ""
+            }
+            PropertyChanges {
+                target: weatherWindowLoader
                 source: ""
             }
         },
@@ -192,9 +128,25 @@ Rectangle {
                 target: eventListWindowLoader
                 source: "EventListWin.qml"
             }
+            PropertyChanges {
+                target: weatherWindowLoader
+                source: ""
+            }
         },
         State {
             name: "WeatherWindowState"
+            PropertyChanges {
+                target: mainWindowLoader;
+                source: ""
+            }
+            PropertyChanges {
+                target: eventListWindowLoader
+                source: ""
+            }
+            PropertyChanges {
+                target: weatherWindowLoader
+                source: "WeatherWindow.qml"
+            }
         },
         State {
             name: "AddEventState"
