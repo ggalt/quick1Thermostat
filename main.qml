@@ -27,13 +27,13 @@ Rectangle {
     property bool showColon: true
 
 
-    function showMainWindow() {
-        mainRectangle.state = "MainWindowState";
-    }
+//    function showMainWindow() {
+//        mainRectangle.state = "MainWindowState";
+//    }
 
-    function showEventListWindow() {
-        mainRectangle.state ="EventWindowState";
-    }
+//    function showEventListWindow() {
+//        mainRectangle.state ="EventWindowState";
+//    }
 
     Timer {
         id: introTimer
@@ -41,8 +41,8 @@ Rectangle {
         repeat: false
         running: true
         triggeredOnStart: true
-        onTriggered: state="MainWindowState"
-//        onTriggered: loadWindow("MainWindow")
+//        onTriggered: state="MainWindowState"
+        onTriggered: loadWindow("MainWindow")
     }
 
     Timer {
@@ -54,8 +54,8 @@ Rectangle {
         onTriggered: getTime()
     }
 
-    Loader {
-        id: mainWindowLoader
+//    Loader {
+//        id: mainWindowLoader
 //        onSourceChanged: mainWinAnimation.running = true
 
 //        NumberAnimation {
@@ -67,12 +67,12 @@ Rectangle {
 //            duration: 300
 //            easing.type: Easing.InExpo
 //        }
-    }
+//    }
 
 
 
-    Loader {
-        id: eventListWindowLoader
+//    Loader {
+//        id: eventListWindowLoader
 //        onSourceChanged: eventWinAnimation.running = true
 
 //        NumberAnimation {
@@ -84,54 +84,54 @@ Rectangle {
 //            duration: 300
 //            easing.type: Easing.InExpo
 //        }
-    }
-
-    Connections {
-        target: mainWindowLoader.item
-        onShowEventWindow: showEventListWindow()
-    }
-
-//    property string sourceComponent
-
-//    function loadWindow(winName) {
-//        console.log(winName)
-//        if(winName === "MainWindow") {
-//            loadComponent("MainWindow.qml")
-////            mainRectangle.state = "MainWindowState"
-//        } else if(winName ==="EventListWin") {
-//            loadComponent("EventListWin.qml")
-//        }
-//    }
-
-//    function loadComponent(component){
-//        fadeIn.stop(); fadeOut.start();
-//        sourceComponent = component;
-//        fadeIn.start()
-//    }
-
-//    Loader {
-//        id: mainWindowLoader
-//        onLoaded: {fadeOut.complete(); fadeIn.start() }
 //    }
 
 //    Connections {
-//        target: mainWindowLoader
-//        onLoadWindow: loadWindow(newWinName)
+//        target: mainWindowLoader.item
+//        onShowEventWindow: showEventListWindow()
 //    }
 
-//    NumberAnimation on opacity {
-//        id: fadeOut
-//        duration: 300
-//        easing.type: Easing.OutCubic
-//        to: 0.0
-//        onCompleted: { mainWindowLoader.source = sourceComponent; }
-//    }
-//    NumberAnimation on opacity {
-//        id: fadeIn
-//        duration: 300
-//        easing.type: Easing.InCubic
-//        to: 1.0
-//    }
+    property string sourceComponent
+
+    function loadWindow(winName) {
+        console.log(winName)
+        if(winName === "MainWindow") {
+            loadComponent("MainWindow.qml")
+//            mainRectangle.state = "MainWindowState"
+        } else if(winName ==="EventListWin") {
+            loadComponent("EventListWin.qml")
+        }
+    }
+
+    function loadComponent(component){
+        fadeIn.stop(); fadeOut.start();
+        sourceComponent = component;
+        fadeIn.start()
+    }
+
+    Loader {
+        id: mainWindowLoader
+        onLoaded: {fadeOut.complete(); fadeIn.start() }
+    }
+
+    Connections {
+        target: mainWindowLoader
+        onLoadWindow: loadWindow(newWinName)
+    }
+
+    NumberAnimation on opacity {
+        id: fadeOut
+        duration: 300
+        easing.type: Easing.OutCubic
+        to: 0.0
+        onCompleted: { mainWindowLoader.source = sourceComponent; }
+    }
+    NumberAnimation on opacity {
+        id: fadeIn
+        duration: 300
+        easing.type: Easing.InCubic
+        to: 1.0
+    }
 
 //    Text {
 //        id: titleText
@@ -170,36 +170,36 @@ Rectangle {
 //        visible: false
 //    }
 
-    states: [
-        State {
-            name: "MainWindowState"
-            PropertyChanges {
-                target: mainWindowLoader;
-                source: "MainWindow.qml"
-            }
-            PropertyChanges {
-                target: eventListWindowLoader
-                source: ""
-            }
-        },
-        State {
-            name: "EventWindowState"
-            PropertyChanges {
-                target: mainWindowLoader;
-                source: ""
-            }
-            PropertyChanges {
-                target: eventListWindowLoader
-                source: "EventListWin.qml"
-            }
-        },
-        State {
-            name: "WeatherWindowState"
-        },
-        State {
-            name: "AddEventState"
-        }
-    ]
+//    states: [
+//        State {
+//            name: "MainWindowState"
+//            PropertyChanges {
+//                target: mainWindowLoader;
+//                source: "MainWindow.qml"
+//            }
+//            PropertyChanges {
+//                target: eventListWindowLoader
+//                source: ""
+//            }
+//        },
+//        State {
+//            name: "EventWindowState"
+//            PropertyChanges {
+//                target: mainWindowLoader;
+//                source: ""
+//            }
+//            PropertyChanges {
+//                target: eventListWindowLoader
+//                source: "EventListWin.qml"
+//            }
+//        },
+//        State {
+//            name: "WeatherWindowState"
+//        },
+//        State {
+//            name: "AddEventState"
+//        }
+//    ]
 
     function getTime() {
         curDate = Qt.formatDate(new Date(),"MMM dd, yyyy");
