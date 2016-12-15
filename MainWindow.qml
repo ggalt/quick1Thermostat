@@ -78,6 +78,11 @@ Rectangle {
         MouseArea {
             id: maUpButton
             anchors.fill: parent
+            onClicked: {
+                targetTemp += 1
+                if(targetTemp > 99)
+                    targetTemp = 99
+            }
         }
     }
 
@@ -94,6 +99,11 @@ Rectangle {
         MouseArea {
             id: maDownButton
             anchors.fill: parent
+            onClicked: {
+                targetTemp -= 1
+                if(targetTemp < 40)
+                    targetTemp = 40
+            }
         }
     }
 
