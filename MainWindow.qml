@@ -195,11 +195,13 @@ Rectangle {
         y: 138
         width: 60
         height: 60
+        fillMode: Image.PreserveAspectFit
+        opacity: 1
         anchors.leftMargin: 2
         anchors.left: parent.left
         anchors.bottom: txtTime.top
         anchors.bottomMargin: 6
-        source: "qrc:/qtquickplugin/images/template_image.png"
+        source: "icons/heating.png"
     }
 
     Text {

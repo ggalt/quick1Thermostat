@@ -1,23 +1,24 @@
 import QtQuick 1.1
 import Qt.labs.gestures 1.0
 
-Rectangle {
+Item {
     id: mainRectangle
     width: 320
     height: 240
+    objectName: "mainRectangle"
 
-    gradient: Gradient {
-        id: mainGradient
-        GradientStop {
-            position: 0
-            color: "#ffffff"
-        }
+//    gradient: Gradient {
+//        id: mainGradient
+//        GradientStop {
+//            position: 0
+//            color: "#ffffff"
+//        }
 
-        GradientStop {
-            position: 1
-            color: "#62c288"
-        }
-    }
+//        GradientStop {
+//            position: 1
+//            color: "#62c288"
+//        }
+//    }
 
     property string degreeMark: String.fromCharCode(176)
     property int curTemp: 70

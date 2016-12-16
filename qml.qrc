@@ -22,5 +22,7 @@
         <file>icons/weather-sunny-very-few-clouds.png</file>
         <file>icons/weather-sunny.png</file>
         <file>icons/weather-thundershower.png</file>
+        <file>icons/cooling.png</file>
+        <file>icons/heating.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,8 @@
 #define QTHERMOAPPVIEWER_H
 
 #include "qtquick1applicationviewer.h"
+#include <QDeclarativeItem>
+#include <QList>
 
 ///
 /// \brief The qThermoAppViewer class
@@ -22,6 +24,11 @@ signals:
 public slots:
     void LaunchEventListWin(void);
     void LaunchWeatherWin(void);
+    void CheckTemp(void);
+
+private:
+    QObject *mainRec;
+    static QDeclarativeItem* FindItemByName(QList<QObject*> nodes, const QString& name);
 };
 
 #endif // QTHERMOAPPVIEWER_H

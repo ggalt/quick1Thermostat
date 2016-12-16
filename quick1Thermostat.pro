@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     qeventlistwindow.cpp \
     appmodel.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    qml.qrc
 
 # Installation path
 # target.path =
