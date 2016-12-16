@@ -44,6 +44,12 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 90
+
+        MouseArea {
+            id: maCurrentTemp
+            anchors.fill: parent
+            onClicked: mainRectangle.showEventListWindow()
+        }
     }
 
     Text {
