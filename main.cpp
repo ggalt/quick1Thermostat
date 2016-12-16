@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     qThermoAppViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));
     viewer.setOrientation(QtQuick1ApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qrc:/main.qml"));
+    viewer.setMainQmlFile(QLatin1String("qrc:main.qml"));
 //    viewer.Init();
 //    QObject *obj = (QObject*)viewer.rootObject();
 

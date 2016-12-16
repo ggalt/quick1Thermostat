@@ -184,7 +184,7 @@ Rectangle {
             id: backButton
             width: 40
             height: 50
-            source: "backArrow.png"
+            source: "../icons/backArrow.png"
             fillMode: Image.Stretch
             anchors.left: parent.left
             anchors.top: parent.top

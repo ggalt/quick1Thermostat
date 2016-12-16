@@ -73,7 +73,7 @@ Rectangle {
         anchors.bottomMargin: 5
         anchors.bottom: txtTargetTemp.top
         anchors.horizontalCenter: txtTargetTemp.horizontalCenter
-        source: "uparrow.png"
+        source: "icons/uparrow.png"
 
         MouseArea {
             id: maUpButton
@@ -94,7 +94,7 @@ Rectangle {
         anchors.top: txtTargetTemp.bottom
         anchors.topMargin: 5
         anchors.horizontalCenter: txtTargetTemp.horizontalCenter
-        source: "downarrow.png"
+        source: "icons/downarrow.png"
 
         MouseArea {
             id: maDownButton
@@ -146,11 +146,12 @@ Rectangle {
         id: imgCurrentWeather
         width: 80
         height: 80
+        fillMode: Image.PreserveAspectFit
         anchors.left: parent.left
         anchors.leftMargin: 2
         anchors.top: parent.top
         anchors.topMargin: 2
-        source: "Sun-80.png"
+        source: "icons/weather-sunny-very-few-clouds.png"
 
         MouseArea {
             id: maWeather
