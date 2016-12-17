@@ -5,7 +5,8 @@ QML_IMPORT_PATH =
 SOURCES += main.cpp \
     qthermoappviewer.cpp \
     qeventlistwindow.cpp \
-    appmodel.cpp
+    weatherdata.cpp \
+    weathernetworkconnection.cpp
 
 RESOURCES += \
     qml.qrc
@@ -24,6 +25,7 @@ FORMS +=
 HEADERS += \
     qthermoappviewer.h \
     qeventlistwindow.h \
-    appmodel.h
+    weatherdata.h \
+    weathernetworkconnection.h
 
 OTHER_FILES +=

@@ -27,6 +27,7 @@ Item {
     property string curDate: ""
     property string curTime: ""
     property bool showColon: true
+    property string outsideCurrentTemp: ""
 
 
     function showMainWindow() {

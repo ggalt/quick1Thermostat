@@ -170,7 +170,7 @@ Rectangle {
             id: outsideTemp
             x: 86
             y: 26
-            text: qsTr("70")
+            text: outsideCurrentTemp
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             font.pixelSize: 22

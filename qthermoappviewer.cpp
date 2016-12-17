@@ -24,51 +24,15 @@ qThermoAppViewer::qThermoAppViewer(QtQuick1ApplicationViewer *parent) :
 
 void qThermoAppViewer::Init(void)
 {
-//    mainRec = this->rootObject();
-//    QObject *rect = mainRec->findChild<QObject*>("mainRectangle");
-//    qDebug() << "Found rect:" << (rect != NULL);
-//    if(rect)
-//        qDebug() << "temp" << rect->property("curTemp");
+    mainRec = this->rootObject();
 
-//    QTimer t;
-//    t.singleShot(1000,Qt::PreciseTimer,this, SLOT(CheckTemp()));
-//    mainRec = findChild<QObject*>("mainRectangle");
-//    qDebug() << "Object found:" << (mainRec == NULL);
+    connect(&tick, SIGNAL(timeout()),
+            this, SLOT(CheckTemp()));
 
-//    qDebug() << "this has child count of:" <<this->children().count();
-//    mainRec = this->rootObject()->findChild<QRect*>("mainRectangle");
-//    qDebug() << "Found main Rec:" << (mainRec != NULL);
-//    QListIterator<QObject*> i(this->children());
-//    const QMetaObject *meta = mainRec->metaObject();
+    tick.setInterval(5000);
+    tick.start();
 
-//    QHash<QString, QVariant> list;
-//    for (int i = 0; i < meta->propertyCount(); i++)
-//    {
-//        QMetaProperty property = meta->property(i);
-//        const char* name = property.name();
-//        QVariant value = mainRec->property(name);
-//        list[name] = value;
-//    }
-
-//    QString out;
-//    QHashIterator<QString, QVariant> i(list);
-//    while (i.hasNext()) {
-//        i.next();
-//        out.append(i.key());
-//        out.append(": ");
-//        out.append(i.value().toString());
-//        if (!out.isEmpty())
-//        {
-//            qDebug() << out;
-//            out.clear();
-//        }
-//    }
-
-//    qDebug() << "dynamic props:" << mainRec->dynamicPropertyNames();
-//    FindItemByName(this->children(), "mainRectangle");
-    // not found
-//    connect(this,SIGNAL(showEventWindow()),this,SLOT(LaunchEventListWin()));
-//    connect(this,SIGNAL(showWeatherWindow()),this,SLOT(LaunchWeatherWin()));
+    m_weather = new WeatherNetworkConnection(this);
 }
 
 
@@ -86,11 +50,7 @@ void qThermoAppViewer::LaunchWeatherWin(void)
 
 void qThermoAppViewer::CheckTemp(void)
 {
-    mainRec = this->rootObject();
-    QObject *rect = mainRec->findChild<QObject*>("mainRectangle");
-    qDebug() << "Found rect:" << (rect != NULL);
-    if(rect)
-        qDebug() << "temp" << rect->property("curTemp");
+    mainRec->setProperty("outsideCurrentTemp",m_weather->weather()->temperature());
 }
 
 QDeclarativeItem* qThermoAppViewer::FindItemByName(QList<QObject*> nodes, const QString& name)

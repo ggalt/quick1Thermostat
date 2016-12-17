@@ -2,8 +2,11 @@
 #define QTHERMOAPPVIEWER_H
 
 #include "qtquick1applicationviewer.h"
+#include "weathernetworkconnection.h"
+
 #include <QDeclarativeItem>
 #include <QList>
+#include <QTimer>
 
 ///
 /// \brief The qThermoAppViewer class
@@ -28,6 +31,9 @@ public slots:
 
 private:
     QObject *mainRec;
+    QTimer tick;
+
+    WeatherNetworkConnection *m_weather;
     static QDeclarativeItem* FindItemByName(QList<QObject*> nodes, const QString& name);
 };
 
