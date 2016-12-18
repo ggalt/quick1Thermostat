@@ -20,15 +20,16 @@ Item {
 //        }
 //    }
 
-    property string degreeMark: String.fromCharCode(176)
-    property int curTemp: 70
-    property int targetTemp: 70
-    property int curHumidity: 20
+    property string curTemp: ""
+    property string targetTemp: ""
+    property string curHumidity: ""
     property string curDate: ""
     property string curTime: ""
     property bool showColon: true
     property string outsideCurrentTemp: ""
-
+    property string weatherIcon: "01d"
+    property int fanState: 0
+    property int coolingState: 0
 
     function showMainWindow() {
         mainRectangle.state = "MainWindowState";
@@ -42,15 +43,14 @@ Item {
         mainRectangle.state = "WeatherWindowState"
     }
 
-    Timer {
-        id: introTimer
-        interval: 700
-        repeat: false
-        running: true
-        triggeredOnStart: true
-        onTriggered: state="MainWindowState"
-//        onTriggered: loadWindow("MainWindow")
-    }
+//    Timer {
+//        id: introTimer
+//        interval: 700
+//        repeat: false
+//        running: true
+//        triggeredOnStart: true
+//        onTriggered: state="MainWindowState"
+//    }
 
     Timer {
         id: textTimer
@@ -59,6 +59,11 @@ Item {
         running: true
         triggeredOnStart: true
         onTriggered: getTime()
+    }
+
+    Loader {
+        id: spashScreenLoader
+        onLoaded: item.fadeIn()
     }
 
     Loader {
@@ -76,33 +81,6 @@ Item {
         onLoaded: item.fadeIn()
     }
 
-//    Connections {
-//        target: mainWindowLoader.item
-//        onShowEventWindow: showEventListWindow()
-//    }
-
-    GestureArea {
-        anchors.fill: parent
-        onSwipe: console.log(Gesture.gestureType.toString(), Gesture.gestureType.valueOf())
-    }
-
-
-
-//    Text {
-//        id: titleText
-//        x: 119
-//        y: 104
-//        color: "#d12525"
-//        text: qsTr("qThermostat")
-//        visible: false
-//        font.bold: true
-//        font.italic: true
-//        horizontalAlignment: Text.AlignHCenter
-//        verticalAlignment: Text.AlignVCenter
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.verticalCenter: parent.verticalCenter
-//        font.pixelSize: 40
-//    }
 
     states: [
         State {
@@ -117,6 +95,10 @@ Item {
             }
             PropertyChanges {
                 target: weatherWindowLoader
+                source: ""
+            }
+            PropertyChanges {
+                target: spashScreenLoader
                 source: ""
             }
         },
@@ -134,6 +116,10 @@ Item {
                 target: weatherWindowLoader
                 source: ""
             }
+            PropertyChanges {
+                target: spashScreenLoader
+                source: ""
+            }
         },
         State {
             name: "WeatherWindowState"
@@ -149,9 +135,32 @@ Item {
                 target: weatherWindowLoader
                 source: "WeatherWindow.qml"
             }
+            PropertyChanges {
+                target: spashScreenLoader
+                source: ""
+            }
         },
         State {
             name: "AddEventState"
+        },
+        State {
+            name: "SpashScreenState"
+            PropertyChanges {
+                target: mainWindowLoader;
+                source: ""
+            }
+            PropertyChanges {
+                target: eventListWindowLoader
+                source: ""
+            }
+            PropertyChanges {
+                target: weatherWindowLoader
+                source: ""
+            }
+            PropertyChanges {
+                target: spashScreenLoader
+                source: "SplashScreen.qml"
+            }
         }
     ]
 
@@ -164,4 +173,7 @@ Item {
         }
         showColon = !showColon;
     }
+
+    state: "SpashScreenState"
+
 }

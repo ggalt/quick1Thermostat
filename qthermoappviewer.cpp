@@ -20,6 +20,7 @@
 qThermoAppViewer::qThermoAppViewer(QtQuick1ApplicationViewer *parent) :
     QtQuick1ApplicationViewer(parent)
 {
+    initializingApp = true;
 }
 
 void qThermoAppViewer::Init(void)
@@ -51,6 +52,15 @@ void qThermoAppViewer::LaunchWeatherWin(void)
 void qThermoAppViewer::CheckTemp(void)
 {
     mainRec->setProperty("outsideCurrentTemp",m_weather->weather()->temperature());
+    mainRec->setProperty("curTemp", m_weather->niceTemperatureString(294.261));
+    mainRec->setProperty("targetTemp", m_weather->niceTemperatureString(294.261));
+    mainRec->setProperty("weatherIcon", m_weather->weather()->weatherIcon());
+    mainRec->setProperty("curHumidity", m_weather->weather()->humidity());
+
+    if(initializingApp) {
+        mainRec->setProperty("state", "MainWindowState");
+        initializingApp = false;
+    }
 }
 
 QDeclarativeItem* qThermoAppViewer::FindItemByName(QList<QObject*> nodes, const QString& name)

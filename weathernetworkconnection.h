@@ -42,6 +42,12 @@ public:
     bool ready() const { return m_ready; }
     QString city() const { return m_city; }
 
+    QString niceTemperatureString(double t);
+    QString niceTime(double t);
+    QString niceDayOfWeek(double t);
+    QString niceDate( double t );
+    QDateTime niceDateTime( double t );
+
     void setCity(const QString &value);
     WeatherData *weather();
     QDeclarativeListProperty<WeatherData> forecast() const;
@@ -67,7 +73,6 @@ signals:
     void weatherChanged();
 
 private:
-    QString niceTemperatureString(double t);
     void JsonProcessWeatherObject(WeatherData &data, QJsonObject &obj);
     void JsonProcessMainInfoObject(WeatherData &data, QJsonObject &obj);
     void JsonProcessSysInfoObject(WeatherData &data, QJsonObject &obj);

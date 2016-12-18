@@ -32,9 +32,11 @@ public slots:
 private:
     QObject *mainRec;
     QTimer tick;
+    bool initializingApp;
 
     WeatherNetworkConnection *m_weather;
     static QDeclarativeItem* FindItemByName(QList<QObject*> nodes, const QString& name);
+
 };
 
 #endif // QTHERMOAPPVIEWER_H

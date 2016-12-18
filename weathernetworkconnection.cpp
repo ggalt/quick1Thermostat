@@ -1,6 +1,8 @@
 #include "weathernetworkconnection.h"
 
 #include <QDebug>
+#include <QDateTime>
+#include <QTimeZone>
 
 
 #define REFRESH_RATE 10*60*1000     // refresh weather every 10 minutes
@@ -116,6 +118,8 @@ void WeatherNetworkConnection::processWeather(QNetworkReply *networkReply)
     }   // end if network
     qDebug() << m_now.temperature();
     qDebug() << m_forecast.at(0)->temperature();
+    qDebug() << m_now.weatherIcon() << m_now.weatherDescription() << m_now.sunRise() << m_now.sunSet()
+             << m_now.tempMax() << m_now.tempMin();
 }
 
 void WeatherNetworkConnection::JsonProcessWeatherObject( WeatherData &data, QJsonObject &obj )
@@ -151,8 +155,8 @@ void WeatherNetworkConnection::JsonProcessSysInfoObject(WeatherData &data, QJson
     if( obj.contains(QStringLiteral("sys"))) {
         QJsonValue val = obj.value(QStringLiteral("sys"));
         QJsonObject sysObj = val.toObject();
-        data.setSunRise(sysObj.value(QStringLiteral("sunrise")).toString());
-        data.setSunSet(sysObj.value(QStringLiteral("sunset")).toString());
+        data.setSunRise(niceTime(sysObj.value(QStringLiteral("sunrise")).toDouble()*1000));
+        data.setSunSet(niceTime(sysObj.value(QStringLiteral("sunset")).toDouble()*1000));
     }   // end sunrise and sunset
 }
 
@@ -174,4 +178,33 @@ QString WeatherNetworkConnection::niceTemperatureString(double t)
         temp = qRound(t-ZERO_KELVIN);
 
     return QString::number(temp) + QChar(0xB0);
+}
+
+QString WeatherNetworkConnection::niceTime(double t)
+{
+    // return just the time from a Unix epoch
+    QTimeZone z(QTimeZone::systemTimeZoneId());
+    QDateTime dt(QDateTime::fromMSecsSinceEpoch(t,z));
+    return dt.time().toString("h:mm AP");
+}
+
+QString WeatherNetworkConnection::niceDayOfWeek(double t)
+{
+    QTimeZone z(QTimeZone::systemTimeZoneId());
+    QDateTime dt(QDateTime::fromMSecsSinceEpoch(t,z));
+    return dt.toString("ddd");
+}
+
+QString WeatherNetworkConnection::niceDate( double t )
+{
+    QTimeZone z(QTimeZone::systemTimeZoneId());
+    QDateTime dt(QDateTime::fromMSecsSinceEpoch(t,z));
+    return dt.toString("MMM d yy");
+}
+
+QDateTime WeatherNetworkConnection::niceDateTime( double t )
+{
+    QTimeZone z(QTimeZone::systemTimeZoneId());
+    QDateTime dt(QDateTime::fromMSecsSinceEpoch(t,z));
+    return dt;
 }

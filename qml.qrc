@@ -24,5 +24,6 @@
         <file>icons/weather-thundershower.png</file>
         <file>icons/cooling.png</file>
         <file>icons/heating.png</file>
+        <file>SplashScreen.qml</file>
     </qresource>
 </RCC>

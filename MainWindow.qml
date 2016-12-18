@@ -29,6 +29,74 @@ Rectangle {
     function fadeIn() {
         fadeInAnimation.start()
     }
+/*
+ * Icon list
+ * Day icon 	Night icon 	Description
+ * 01d.png      01n.png 	clear sky
+ * 02d.png      02n.png 	few clouds
+ * 03d.png      03n.png 	scattered clouds
+ * 04d.png      04n.png 	broken clouds
+ * 09d.png      09n.png 	shower rain
+ * 10d.png      10n.png 	rain
+ * 11d.png      11n.png 	thunderstorm
+ * 13d.png      13n.png 	snow
+ * 50d.png      50n.png 	mist
+ */
+    function setWeatherIcon() {
+        switch(weatherIcon) {
+        case "01d":
+        case "01n":
+            imgCurrentWeather.source = "icons/weather-sunny.png"
+            break;
+        case "02d":
+        case "02n":
+            imgCurrentWeather.source = "icons/weather-sunny-very-few-clouds.png"
+            break;
+        case "03d":
+        case "03n":
+            imgCurrentWeather.source = "icons/weather-few-clouds.png"
+            break;
+        case "04d":
+        case "04n":
+            imgCurrentWeather.source = "icons/weather-overcast.png"
+            break;
+        case "09d":
+        case "09n":
+            imgCurrentWeather.source = "icons/weather-showers.png"
+            break;
+        case "10d":
+        case "10n":
+            imgCurrentWeather.source = "icons/weather-showers.png"
+            break;
+        case "11d":
+        case "11n":
+            imgCurrentWeather.source = "icons/weather-thundershower.png"
+            break;
+        case "13d":
+        case "13n":
+            imgCurrentWeather.source = "icons/weather-snow.png"
+            break;
+        case "50d":
+        case "50n":
+            imgCurrentWeather.source = "icons/weather-fog.png"
+            break;
+        default:
+            imgCurrentWeather.source = "icons/weather-sunny-very-few-clouds.png"
+            break;
+        }
+        if(weatherIconTimer.interval===6000)
+            weatherIconTimer.interval=60*1000*5
+    }
+
+    Timer {
+        id: weatherIconTimer
+        interval: 6000
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: setWeatherIcon()
+    }
+
 
     signal loadWindow(string newWinName)
     signal showEventWindow
