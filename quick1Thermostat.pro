@@ -6,7 +6,8 @@ SOURCES += main.cpp \
     qthermoappviewer.cpp \
     qeventlistwindow.cpp \
     weatherdata.cpp \
-    weathernetworkconnection.cpp
+    weathernetworkconnection.cpp \
+    forecastlistmodel.cpp
 
 RESOURCES += \
     qml.qrc
@@ -26,6 +27,7 @@ HEADERS += \
     qthermoappviewer.h \
     qeventlistwindow.h \
     weatherdata.h \
-    weathernetworkconnection.h
+    weathernetworkconnection.h \
+    forecastlistmodel.h
 
 OTHER_FILES +=
