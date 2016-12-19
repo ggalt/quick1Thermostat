@@ -17,6 +17,8 @@ WeatherNetworkConnection::WeatherNetworkConnection(QObject *parent) :
     m_weatherURL = QUrl("http://api.openweathermap.org/data/2.5/weather");
     m_apiKey = "f3f0986ce37ed779a9eab754fa0e1d86";
 
+    m_forecast = new forecastListModel(this);
+
     tick.setInterval(REFRESH_RATE);
 
     setCity(BETHESDA);
@@ -98,7 +100,8 @@ void WeatherNetworkConnection::processWeather(QNetworkReply *networkReply)
             }   // end state weather
 
             if( qState == WeatherNetworkConnection::Forecast ) {
-                m_forecast.clear();
+                m_forecast->clearList();
+//                m_forecast->clear();
 
                 if (obj.contains(QStringLiteral("list"))) {
                     QJsonValue val = obj.value(QStringLiteral("list"));
@@ -109,7 +112,8 @@ void WeatherNetworkConnection::processWeather(QNetworkReply *networkReply)
                         JsonProcessWeatherObject(*data, tempObj);
                         JsonProcessMainInfoObject(*data,tempObj);
                         JsonProcessDateTextObject(*data,tempObj);
-                        m_forecast.append(data);
+                        m_forecast->addForecastData(data);
+//                        m_forecast.append(data);
                     }   // end for loop
                 }   // end list
                 qState = WeatherNetworkConnection::Weather;
@@ -117,7 +121,8 @@ void WeatherNetworkConnection::processWeather(QNetworkReply *networkReply)
         }   // end if document
     }   // end if network
     qDebug() << m_now.temperature();
-    qDebug() << m_forecast.at(0)->temperature();
+//    qDebug() << m_forecast.at(0)->temperature();
+    qDebug() << m_forecast->at(0)->temperature();
     qDebug() << m_now.weatherIcon() << m_now.weatherDescription() << m_now.sunRise() << m_now.sunSet()
              << m_now.tempMax() << m_now.tempMin();
 }
@@ -168,7 +173,7 @@ void WeatherNetworkConnection::JsonProcessDateTextObject(WeatherData &data, QJso
 }
 
 
-QString WeatherNetworkConnection::niceTemperatureString(double t)
+QString WeatherNetworkConnection::niceTemperatureString(double t, bool displayDegree)
 {
     int temp;
 
@@ -177,7 +182,10 @@ QString WeatherNetworkConnection::niceTemperatureString(double t)
     else
         temp = qRound(t-ZERO_KELVIN);
 
-    return QString::number(temp) + QChar(0xB0);
+    if(displayDegree)
+        return QString::number(temp) + QChar(0xB0);
+    else
+        return QString::number(temp);
 }
 
 QString WeatherNetworkConnection::niceTime(double t)

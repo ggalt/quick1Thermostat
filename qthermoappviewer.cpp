@@ -53,7 +53,7 @@ void qThermoAppViewer::CheckTemp(void)
 {
     mainRec->setProperty("outsideCurrentTemp",m_weather->weather()->temperature());
     mainRec->setProperty("curTemp", m_weather->niceTemperatureString(294.261));
-    mainRec->setProperty("targetTemp", m_weather->niceTemperatureString(294.261));
+    mainRec->setProperty("targetTemp", m_weather->niceTemperatureString(294.261,false));
     mainRec->setProperty("weatherIcon", m_weather->weather()->weatherIcon());
     mainRec->setProperty("curHumidity", m_weather->weather()->humidity());
 

@@ -16,6 +16,8 @@ public:
 public:
     virtual int rowCount(const QModelIndex &parent) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
+
+    WeatherData* at(int row);
     int addForecastData(WeatherData *d);
     bool clearList(void);
 

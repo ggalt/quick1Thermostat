@@ -28,9 +28,17 @@ QVariant forecastListModel::data(const QModelIndex &index, int role) const
 int forecastListModel::addForecastData(WeatherData *d)
 {
     // we only allow appending data
-    beginInsertRows( QModelIndex(), rowCount(), rowCount());
+    beginInsertRows( QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
     m_forecast.append(d);
     endInsertRows();
+}
+
+WeatherData *forecastListModel::at(int row)
+{
+    if( row < m_forecast.count() )
+        return m_forecast.at(row);
+    else
+        return new WeatherData();
 }
 
 bool forecastListModel::clearList(void)
