@@ -36,9 +36,9 @@ class WeatherNetworkConnection : public QObject
     Q_PROPERTY(forecastListModel* forecast
                READ forecast
                NOTIFY forecastChanged)
-    Q_PROPERTY(QDeclarativeListProperty<WeatherData> forecast
-               READ forecast
-               NOTIFY weatherChanged)
+//    Q_PROPERTY(QDeclarativeListProperty<WeatherData> forecast
+//               READ forecast
+//               NOTIFY weatherChanged)
 
 public:
     explicit WeatherNetworkConnection(QObject *parent = 0);
@@ -47,6 +47,7 @@ public:
     QString city() const { return m_city; }
     forecastListModel *forecast() const { return m_forecast; }
 
+    WeatherData *getWeatherForDay(int daysFromToday );
     QString niceTemperatureString(double t, bool displayDegree = true);
     QString niceTime(double t);
     QString niceDayOfWeek(double t);
@@ -55,7 +56,7 @@ public:
 
     void setCity(const QString &value);
     WeatherData *weather();
-    QDeclarativeListProperty<WeatherData> forecast() const;
+//    QDeclarativeListProperty<WeatherData> forecast() const;
 
 public:
     enum queryState { Weather, Forecast };
@@ -89,7 +90,7 @@ private:
     WeatherData m_now;
 //    QList<WeatherData*> m_forecast;
     forecastListModel *m_forecast;
-    QDeclarativeListProperty<WeatherData> *fcProp;
+//    QDeclarativeListProperty<WeatherData> *fcProp;
 
     QUrl m_weatherURL;
     QUrl m_forecastURL;
