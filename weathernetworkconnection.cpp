@@ -4,6 +4,9 @@
 #include <QDateTime>
 #include <QTimeZone>
 #include <QListIterator>
+#include <QHash>
+#include <QHashIterator>
+#include <QSettings>
 
 #define REFRESH_RATE 10*60*1000     // refresh weather every 10 minutes
 #define BETHESDA "4348599"
@@ -19,9 +22,13 @@ WeatherNetworkConnection::WeatherNetworkConnection(QObject *parent) :
 
     m_forecast = new forecastListModel(this);
 
+    QSettings settings;
+
+    setCity( settings.value("City", BETHESDA).toString());
+    setTempScalePreference(settings.value("TempScale", "F").toString());
+
     tick.setInterval(REFRESH_RATE);
 
-    setCity(BETHESDA);
     constructURLs();
 
     m_netManager = new QNetworkAccessManager(this);
@@ -29,7 +36,6 @@ WeatherNetworkConnection::WeatherNetworkConnection(QObject *parent) :
             this,SLOT(processWeather(QNetworkReply*)));
 
     qState = WeatherNetworkConnection::Weather;
-    tempPref = WeatherNetworkConnection::Fahrenheit;
 
     refreshWeather();
 
@@ -41,6 +47,16 @@ WeatherNetworkConnection::WeatherNetworkConnection(QObject *parent) :
             this,SLOT(refreshWeather()));
 
     tick.start();
+}
+
+WeatherNetworkConnection::~WeatherNetworkConnection()
+{
+    QSettings settings;
+    settings.setValue("City", city());
+    if(tempPref == WeatherNetworkConnection::Fahrenheit)
+        settings.setValue("TempScale", "F");
+    else
+        settings.setValue("TempScale", "C");
 }
 
 void WeatherNetworkConnection::constructURLs(void)
@@ -136,7 +152,8 @@ void WeatherNetworkConnection::processWeather(QNetworkReply *networkReply)
 //        qDebug() << "Min:" << d->tempMin() << "Max:" << d->tempMax();
 
 //        qDebug() << getWeatherForDay(2)->dayOfWeek() << getWeatherForDay(2)->tempMax() << getWeatherForDay(2)->tempMin();
-    }
+//    }
+    ProcessHiLowTemps();
 }
 
 void WeatherNetworkConnection::JsonProcessWeatherObject( WeatherData &data, QJsonObject &obj )
@@ -158,12 +175,12 @@ void WeatherNetworkConnection::JsonProcessMainInfoObject(WeatherData &data, QJso
         QJsonValue val = obj.value(QStringLiteral("main"));
         QJsonObject mainObj = val.toObject();
         t = mainObj.value(QStringLiteral("temp")).toDouble();
-        data.setTemperature(niceTemperatureString(t));
+        data.setTemperature(t);
         data.setHumidity(mainObj.value(QStringLiteral("humidity")).toString());
         t = mainObj.value(QStringLiteral("temp_max")).toDouble();
-        data.setTempMax(niceTemperatureString(t));
+        data.setTempMax(t);
         t = mainObj.value(QStringLiteral("temp_min")).toDouble();
-        data.setTempMin(niceTemperatureString(t));
+        data.setTempMin(t);
     }   // end temp, humidity, etc.
 }
 
@@ -184,6 +201,51 @@ void WeatherNetworkConnection::JsonProcessDateTextObject(WeatherData &data, QJso
     }
 }
 
+void WeatherNetworkConnection::ProcessHiLowTemps(void)
+{
+    QHash<QString, qreal> lowTemps;
+    QHash<QString, qreal> hiTemps;
+
+    for(int c = 0; c < m_forecast->rowCount(QModelIndex()); c++ ) {
+        WeatherData *d = m_forecast->at(c);
+        QString today = d->dayOfWeek().left(10);
+        if( !lowTemps.isEmpty() && lowTemps.contains(today)) {
+            if( d->tempMin() < lowTemps.value(today) ) {
+                lowTemps.remove(today);
+                lowTemps.insert(today,d->tempMin());
+            }
+        } else {
+            lowTemps.insert(today,d->tempMin());
+        }
+
+        if( !hiTemps.isEmpty() && hiTemps.contains(today) ) {
+            if( d->tempMax() > hiTemps.value(today) ) {
+                hiTemps.remove(today);
+                hiTemps.insert(today,d->tempMax());
+            }
+        } else {
+            hiTemps.insert(today,d->tempMax());
+        }
+    }
+    qDebug() << "lows" << lowTemps;
+    qDebug() << "highs" << hiTemps;
+
+    for( int c = 0; c < m_forecast->rowCount(QModelIndex()); c++ ) {
+        WeatherData *d = m_forecast->at(c);
+        QString key = d->dayOfWeek().left(10);
+        d->setTempMax(hiTemps.value(key));
+        d->setTempMin(lowTemps.value(key));
+    }
+    qDebug() << "Weather Tomorrow is:" << getWeatherForDay(1)->dayOfWeek() << getWeatherForDay(1)->tempMax();
+}
+
+void WeatherNetworkConnection::setTempScalePreference(QString scale)
+{
+    if(scale == "F")
+        tempPref = WeatherNetworkConnection::Fahrenheit;
+    else
+        tempPref = WeatherNetworkConnection::Celsius;
+}
 
 WeatherData *WeatherNetworkConnection::getWeatherForDay(int daysFromToday )
 {
@@ -195,6 +257,7 @@ WeatherData *WeatherNetworkConnection::getWeatherForDay(int daysFromToday )
         if( dt.daysTo(QDateTime::currentDateTime()) == targetDay && dt.time().hour() == 12 )
             return d;
     }
+    return NULL;
 }
 
 QString WeatherNetworkConnection::niceTemperatureString(double t, bool displayDegree)

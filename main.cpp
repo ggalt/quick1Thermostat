@@ -5,6 +5,11 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // establish for QSettings
+    QCoreApplication::setOrganizationName("GaltIndustries");
+    QCoreApplication::setOrganizationDomain("georgegalt.com");
+    QCoreApplication::setApplicationName("qtPiThermostat");
+
     qThermoAppViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));
     viewer.setOrientation(QtQuick1ApplicationViewer::ScreenOrientationAuto);

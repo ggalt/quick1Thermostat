@@ -65,19 +65,19 @@ void WeatherData::setWeatherDescription(const QString &value)
     emit dataChanged();
 }
 
-void WeatherData::setTemperature(const QString &value)
+void WeatherData::setTemperature(const qreal &value)
 {
     m_temperature = value;
     emit dataChanged();
 }
 
-void WeatherData::setTempMax(const QString &value)
+void WeatherData::setTempMax(const qreal &value)
 {
     m_tempMax = value;
     emit dataChanged();
 }
 
-void WeatherData::setTempMin(const QString &value)
+void WeatherData::setTempMin(const qreal &value)
 {
     m_tempMin = value;
     emit dataChanged();

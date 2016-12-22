@@ -42,6 +42,7 @@ class WeatherNetworkConnection : public QObject
 
 public:
     explicit WeatherNetworkConnection(QObject *parent = 0);
+    ~WeatherNetworkConnection();
 
     bool ready() const { return m_ready; }
     QString city() const { return m_city; }
@@ -84,6 +85,9 @@ private:
     void JsonProcessMainInfoObject(WeatherData &data, QJsonObject &obj);
     void JsonProcessSysInfoObject(WeatherData &data, QJsonObject &obj);
     void JsonProcessDateTextObject(WeatherData &data, QJsonObject &obj);
+    void ProcessHiLowTemps(void);
+    void setTempScalePreference(QString scale);
+
 private:
     QString m_city;
     bool m_ready;

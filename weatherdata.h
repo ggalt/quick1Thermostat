@@ -16,13 +16,13 @@ class WeatherData : public QObject
     Q_PROPERTY(QString weatherDescription
                READ weatherDescription WRITE setWeatherDescription
                NOTIFY dataChanged)
-    Q_PROPERTY(QString temperature
+    Q_PROPERTY(qreal temperature
                READ temperature WRITE setTemperature
                NOTIFY dataChanged)
-    Q_PROPERTY(QString tempMax
+    Q_PROPERTY(qreal tempMax
                READ tempMax WRITE setTempMax
                NOTIFY dataChanged)
-    Q_PROPERTY(QString tempMin
+    Q_PROPERTY(qreal tempMin
                READ tempMin WRITE setTempMin
                NOTIFY dataChanged)
     Q_PROPERTY(QString windSpeed
@@ -51,9 +51,9 @@ public:
     QString dayOfWeek() const { return m_dayOfWeek;}
     QString weatherIcon() const { return m_weather;}
     QString weatherDescription() const {return m_weatherDescription; }
-    QString temperature() const { return m_temperature;}
-    QString tempMax() const { return m_tempMax;}
-    QString tempMin() const { return m_tempMin;}
+    qreal temperature() const { return m_temperature;}
+    qreal tempMax() const { return m_tempMax;}
+    qreal tempMin() const { return m_tempMin;}
     QString windSpeed() const { return m_windSpeed;}
     QString windDirection() const { return m_windDirection;}
     QString visibility() const { return m_visibility;}
@@ -64,9 +64,9 @@ public:
     void setDayOfWeek(const QString &value);
     void setWeatherIcon(const QString &value);
     void setWeatherDescription(const QString &value);
-    void setTemperature(const QString &value);
-    void setTempMax(const QString &value);
-    void setTempMin(const QString &value);
+    void setTemperature(const qreal &value);
+    void setTempMax(const qreal &value);
+    void setTempMin(const qreal &value);
     void setWindSpeed(const QString &value);
     void setWindDirection(const QString &value);
     void setVisibility(const QString &value);
@@ -81,9 +81,9 @@ private:
     QString m_dayOfWeek;
     QString m_weather;
     QString m_weatherDescription;
-    QString m_temperature;
-    QString m_tempMax;
-    QString m_tempMin;
+    qreal m_temperature;
+    qreal m_tempMax;
+    qreal m_tempMin;
     QString m_windSpeed;
     QString m_windDirection;
     QString m_visibility;

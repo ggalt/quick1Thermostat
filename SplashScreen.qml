@@ -35,7 +35,7 @@ Rectangle {
         x: 163
         y: 113
         color: "#5c5a5a"
-        text: qsTr("qThermostat")
+        text: qsTr("qtPiThermostat")
         font.underline: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter

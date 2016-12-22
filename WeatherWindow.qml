@@ -37,6 +37,13 @@ Rectangle {
         fadeInAnimation.start()
     }
 
+    function setCurrentWeatherIcon() {
+        day1Image.source = setWeatherIcon(mainRectangle.todayIcon)
+        day2Image.source = setWeatherIcon(mainRectangle.tomorrowIcon)
+        day3Image.source = setWeatherIcon(mainRectangle.nextDayIcon)
+        console.log("updating weather icons")
+    }
+
     Image {
         id: day1Image
         width: 100
@@ -76,7 +83,7 @@ Rectangle {
         id: day1Label
         x: 42
         y: 165
-        text: qsTr("Text")
+        text: mainRectangle.todayName
         font.pixelSize: 12
     }
 
@@ -84,7 +91,7 @@ Rectangle {
         id: day2Label
         x: 148
         y: 165
-        text: qsTr("Text")
+        text: mainRectangle.tomorrowName
         font.pixelSize: 12
     }
 
@@ -92,7 +99,7 @@ Rectangle {
         id: day3Label
         x: 254
         y: 165
-        text: qsTr("Text")
+        text: mainRectangle.nextDayName
         font.pixelSize: 12
     }
 
@@ -149,7 +156,7 @@ Rectangle {
         Text {
             id: day1HighTemp
             x: 86
-            text: day1High
+            text: mainRectangle.todayHiTemp
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.top: parent.top
@@ -160,7 +167,7 @@ Rectangle {
             id: day1LowTemp
             x: 86
             y: 133
-            text: day1Low
+            text: mainRectangle.todayLoTemp
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -203,7 +210,7 @@ Rectangle {
             id: day2LowTemp
             x: 86
             y: 133
-            text: day2Low
+            text: mainRectangle.tomorrowLoTemp
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -225,7 +232,7 @@ Rectangle {
             id: day2HighTemp
             x: 86
             y: 0
-            text: day2High
+            text: mainRectangle.tomorrowHiTemp
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.top: parent.top
@@ -255,7 +262,7 @@ Rectangle {
             id: day3LowTemp
             x: 82
             y: 133
-            text: day3Low
+            text: mainRectangle.nextDayLoTemp
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -277,7 +284,7 @@ Rectangle {
             id: day3HighTemp
             x: 82
             y: 0
-            text: day3High
+            text: mainRectangle.nextDayHiTemp
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.top: parent.top
